@@ -28,15 +28,29 @@
             </div>
         </div>
     </div>
-
-    @if(HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString().Equals("Index")){
-        @RenderBody()
-        <div class="container body-content">
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Musica.fm - Управување со ИКТ проекти</p>
-            </footer>
-        </div>
+    
+    @if(!HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().Equals("Account"))
+    {
+        if(!HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().Equals("Manage"))
+        {
+            @RenderBody()
+            <div class="container body-content">
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - Musica.fm - Управување со ИКТ проекти</p>
+                </footer>
+            </div>
+        }
+        else
+        {
+            <div class="container body-content">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - Musica.fm - Управување со ИКТ проекти</p>
+                </footer>
+            </div>
+        }
     }
     else
     {
