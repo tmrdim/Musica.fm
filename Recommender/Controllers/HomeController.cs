@@ -20,7 +20,7 @@ namespace Recommender.Controllers
 
 
         
-        //[Authorize] Со ова не може некој да си го види профилот ако не е логиран
+        [Authorize] //Со ова не може некој да си го види профилот ако не е логиран
         public ActionResult MyProfile()
         {
             ViewBag.Message = "Your profile page.";
@@ -28,6 +28,7 @@ namespace Recommender.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult MyCollections()
         {
             ViewBag.Message = "Your collections page.";
