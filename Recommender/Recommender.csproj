@@ -302,6 +302,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\MyCollections.cshtml" />
     <Content Include="Views\Home\MyProfile.cshtml" />
+    <Content Include="Views\Song\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
