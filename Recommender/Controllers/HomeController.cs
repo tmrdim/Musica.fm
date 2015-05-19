@@ -6,7 +6,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using Recommender.Model;
 using System.Web.UI.WebControls;
 
 namespace Recommender.Controllers

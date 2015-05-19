@@ -303,6 +303,10 @@
     <Content Include="Views\Home\MyCollections.cshtml" />
     <Content Include="Views\Home\MyProfile.cshtml" />
     <Content Include="Views\Song\Details.cshtml" />
+    <Content Include="Views\Song\AddGenre.cshtml" />
+    <Content Include="Views\Song\AddAuthor.cshtml" />
+    <Content Include="Views\Song\AddCollection.cshtml" />
+    <Content Include="Views\Song\AddArtist.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

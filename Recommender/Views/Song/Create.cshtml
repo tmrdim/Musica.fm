@@ -5,12 +5,26 @@
 }
 
 <h2>Create</h2>
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Modal header</h3>
+    </div>
+    <div class="modal-body">
+        <p>One fine body…</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary">Save changes</button>
+    </div>
+</div>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Song</h4>
         <hr />
@@ -26,30 +40,31 @@
         <div class="form-group">
             @Html.Label("Artist", new { @class = "control-label col-md-2" })
             <div class="form-inline col-md-8">
-                @Html.DropDownListFor(model => model.ArtistId, (List<SelectListItem>)ViewBag.Artists, "- Select an Artist -", new { @class = "form-control" })
-                <input type="submit" value="Add an Artist" class="btn btn-success btn-sm" />
+                @using (Ajax.BeginForm("AddArtist", "Song", new { formName = "AddArtistForm" }, new AjaxOptions()))
+                {
+                    @Html.DropDownListFor(model => model.ArtistId, (List<SelectListItem>)ViewBag.Artists, "- Select an Artist -", new { @class = "form-control" })
+                    <input type="submit" value="Add an Artist" class="btn btn-success btn-sm add-artist" />
+                }
             </div>
-            
+
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AuthorId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Author", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="form-inline col-md-10">
-                @Html.EditorFor(model => model.AuthorId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AuthorId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.AuthorId, (List<SelectListItem>)ViewBag.Authors, "- Select an Author -", new { @class = "form-control" })
                 <input type="submit" value="Add an Author" class="btn btn-success btn-sm" />
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.GenreId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Genre", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="form-inline col-md-10">
-                @Html.EditorFor(model => model.GenreId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GenreId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.GenreId, (List<SelectListItem>)ViewBag.Genres, "- Select Genre -", new { @class = "form-control" })
                 <input type="submit" value="Add Genre" class="btn btn-success btn-sm" />
             </div>
         </div>
-    
+
         <div class="form-group">
             @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -80,4 +95,10 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $('.add-artist').on('click', function () {
+            alert("Show modal");
+        });
+    </script>
 }

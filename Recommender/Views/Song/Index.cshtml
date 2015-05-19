@@ -6,9 +6,11 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<button type="button" class="btn btn-default">
+    <span class="glyphicon glyphicon-plus-sign"></span> 
+    @Html.ActionLink("Add new Song", "Create")
+</button>
+
 <table class="table">
     <tr>
         <th>
@@ -18,13 +20,10 @@
             @Html.DisplayName("Artist")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AuthorId)
+            @Html.DisplayName("Author")
         </th>
         <th>
             @Html.DisplayName("Genre")
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Timestamp)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Duration)
@@ -50,20 +49,21 @@
             @Html.DisplayFor(modelItem => item.Genre.GenreName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Timestamp)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Duration)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Collection.CollectionName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SongId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SongId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SongId })
+            @Html.ActionLink("Details", "Details", new { id=item.SongId })
         </td>
     </tr>
 }
 
 </table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+}

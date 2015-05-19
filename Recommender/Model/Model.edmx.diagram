@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c027752a67d44720a65538ab030b13c8" Name="Diagram1">
+      <Diagram DiagramId="c027752a67d44720a65538ab030b13c8" Name="Diagram1" ZoomLevel="60">
         <EntityTypeShape EntityType="MusicReccomenderModel.Artist" Width="1.5" PointX="6" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MusicReccomenderModel.AspNetRole" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="MusicReccomenderModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
