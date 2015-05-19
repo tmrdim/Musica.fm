@@ -164,6 +164,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SongController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -301,8 +302,14 @@
     <Content Include="Views\Song\Create.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\MyCollections.cshtml" />
+<<<<<<< HEAD
+    <Content Include="Views\Home\MyDashboard.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+=======
     <Content Include="Views\Home\MyProfile.cshtml" />
     <Content Include="Views\Song\Details.cshtml" />
+>>>>>>> upstream/master
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
