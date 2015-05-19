@@ -40,11 +40,10 @@
         <div class="form-group">
             @Html.Label("Artist", new { @class = "control-label col-md-2" })
             <div class="form-inline col-md-8">
-                @using (Ajax.BeginForm("AddArtist", "Song", new { formName = "AddArtistForm" }, new AjaxOptions()))
-                {
                     @Html.DropDownListFor(model => model.ArtistId, (List<SelectListItem>)ViewBag.Artists, "- Select an Artist -", new { @class = "form-control" })
-                    <input type="submit" value="Add an Artist" class="btn btn-success btn-sm add-artist" />
-                }
+                <input type="submit" value="Add an Artist" class="btn btn-success btn-sm add-artist"
+                       onclick="location.href='@Url.Action("AddArtist", "Song")'" />
+                    
             </div>
 
         </div>
@@ -53,7 +52,8 @@
             @Html.Label("Author", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="form-inline col-md-10">
                 @Html.DropDownListFor(model => model.AuthorId, (List<SelectListItem>)ViewBag.Authors, "- Select an Author -", new { @class = "form-control" })
-                <input type="submit" value="Add an Author" class="btn btn-success btn-sm" />
+                <input type="submit" value="Add an Author" class="btn btn-success btn-sm" 
+                       onclick="location.href='@Url.Action("AddAuthor", "Song")'" />
             </div>
         </div>
 
@@ -61,7 +61,8 @@
             @Html.Label("Genre", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="form-inline col-md-10">
                 @Html.DropDownListFor(model => model.GenreId, (List<SelectListItem>)ViewBag.Genres, "- Select Genre -", new { @class = "form-control" })
-                <input type="submit" value="Add Genre" class="btn btn-success btn-sm" />
+                <input type="submit" value="Add Genre" class="btn btn-success btn-sm"
+                       onclick="location.href='@Url.Action("AddGenre", "Song")'" />
             </div>
         </div>
 
@@ -77,7 +78,8 @@
             @Html.Label("Collection", new { @class = "control-label col-md-2" })
             <div class="form-inline col-md-10">
                 @Html.DropDownListFor(model => model.CollectionId, (List<SelectListItem>)ViewBag.Collections, "- Select a Collection -", new { @class = "form-control" })
-                <input type="submit" value="Add Collection" class="btn btn-success btn-sm" />
+                <input type="submit" value="Add Collection" class="btn btn-success btn-sm"
+                       onclick="location.href='@Url.Action("AddCollection", "Song")'" />
             </div>
         </div>
 
@@ -98,7 +100,7 @@
 
     <script>
         $('.add-artist').on('click', function () {
-            alert("Show modal");
+            
         });
     </script>
 }
