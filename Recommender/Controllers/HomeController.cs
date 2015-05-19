@@ -26,7 +26,7 @@ namespace Recommender.Controllers
         [Authorize] //Со ова не може некој да си го види профилот ако не е логиран
         public ActionResult MyDashboard()
         {
-            ViewBag.Message = "Your profile page.";
+            ViewBag.Message = "Your profile pageasd.";
 
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             var user = manager.FindByNameAsync(User.Identity.Name);

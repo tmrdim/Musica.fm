@@ -66,6 +66,16 @@ namespace Recommender.Controllers
             return View(song);
         }
 
+        
+        public ActionResult Details(int id)
+        {
+            var selectedSong = _db.Songs.Where(x => x.SongId == id).FirstOrDefault();
+            //ViewBag.Users = _db.AspNetUsers.Where(x => x.Songs.Contains(selectedSong)).ToList();
+            //ViewBag.Friends = _db.AspNetUsers.Where(x => x.Songs.Contains(selectedSong)).Where(x => x.AspNetUsers.Contains(_db.AspNetUsers.Where(y => y.Id == /*ID OF CURRENT USER*/).First())).ToList();
+
+            return View(selectedSong);
+        }
+
         // POST: Song/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

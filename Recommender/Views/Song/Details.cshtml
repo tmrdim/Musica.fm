@@ -1,0 +1,99 @@
+﻿@model Recommender.Model.Song
+
+@{
+    ViewBag.Title = "Song Details";
+}
+
+<h2>Song Details</h2>
+
+
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <div class="jumbotron">
+            <p align="center">
+                <span class="glyphicon glyphicon-music" style="font-size: 60px; color: #5bc0de"></span><br />
+            </p>
+            <p>
+                @Html.DisplayName("Title: ")
+                @Html.DisplayFor(model => model.SongTitle)
+            </p>
+            <p>
+                @Html.DisplayName("Artist: ")
+                @Html.DisplayFor(model => model.Artist.ArtistName)
+            </p>
+            <p>
+                @Html.DisplayName("Collection: ")
+                @Html.DisplayFor(model => model.Collection.CollectionName)
+            </p>
+            @if (Model.AuthorId != null)
+            {
+                <p>
+                    @Html.DisplayName("Author: ")
+                    @Html.DisplayFor(model => model.Author.AuthorName)
+                </p>
+            }
+
+            <p>
+                @Html.DisplayName("Genre: ")
+                @Html.DisplayFor(model => model.Genre.GenreName)
+            </p>
+            @if (Model.Duration != null)
+            {
+                <p>
+                    @Html.DisplayName("Duration: ")
+                    @Html.DisplayFor(model => model.Duration)
+                </p>
+            }
+
+            <button type="button" class="btn btn-info btn-sm" style="float: right;">
+                <span class="glyphicon glyphicon-play" style="font-size: 14px;"></span> Play
+            </button>
+        </div>
+    </div>
+
+
+    <div class="col-md-6 col-xs-12">
+        <div class="jumbotron">
+            <h4 style="color: #5bc0de">Friends who like this song:</h4>
+            <table class="table" style="font-size: small">
+                <tr>
+                    <th>Name and Surname</th>
+                    <th>Username</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>tamara</td>
+                    <td>tmrdim</td>
+                    <td><a>See profile</a></td>
+                </tr>
+               
+
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xs-12">
+        <div class="jumbotron">
+            <h4 style="color: #5bc0de">Users who like this song:</h4>
+            <table class="table" style="font-size: small">
+                <tr>
+                    <th>Name and Surname</th>
+                    <th>Username</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>tamara</td>
+                    <td>tmrdim</td>
+                    <td><a>See profile</a></td>
+                </tr>
+                
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SongId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
