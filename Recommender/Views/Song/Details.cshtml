@@ -6,46 +6,50 @@
     songQuery.Replace(' ', '+');
 }
 
-<h2>Song Details</h2>
+<div class="container body-content">
 
-<div class="alert" id="message" role="alert"></div>
+    <div class="panel-heading" align="center" style="margin-bottom:20px; background-image:url('../../Content/img/swirl_pattern.png')">
+        <h1 style="color: #339999">Song Details</h1>
+    </div>
 
-<div class="modal fade" id="modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                @using (Ajax.BeginForm("AddSongToUserCollection", null,
+    <!--Alert that shows if adding the song to user collection is success or not.-->
+    <div class="alert" id="message" role="alert"></div>
+
+    <!--Modal for choosing the user collections for adding the current song.-->
+    <div class="modal fade" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" style="color: #339999">Add "@Model.SongTitle" to:</h4>
+                </div>
+                <div class="modal-body">
+                    @using (Ajax.BeginForm("AddSongToUserCollection", null,
                     new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccessAddSongToUserCollection(data)" },
                     new { id = "addSongToUserCollection" }))
-                {
-                    @Html.HiddenFor(model => model.SongId)
-                    foreach (var userCollection in (List<Recommender.Model.UserCollection>)ViewBag.UserCollections)
                     {
-                        <div class="checkbox">
-                            <label><input type="checkbox" name="collectionIds" value="@userCollection.UserCollectionId">@userCollection.UserCollectionName.ToString()</label>
-                        </div>
+                        @Html.HiddenFor(model => model.SongId)
+                        foreach (var userCollection in (List<Recommender.Model.UserCollection>)ViewBag.UserCollections)
+                        {
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="collectionIds" value="@userCollection.UserCollectionId">@userCollection.UserCollectionName.ToString()</label>
+                            </div>
+                        }
                     }
-                }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn" style="background-color: #339999; color: white" onclick="submitForm()">Choose</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="submitForm()">Choose</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-<div class="row">
+    <!--Block for showing detailed info for the song.-->
     <div class="col-md-6 col-xs-12">
-        <div class="jumbotron">
+        <div class="jumbotron" style="background-color: #F0F0F0; ">
             <p align="center">
-                <span class="glyphicon glyphicon-music" style="font-size: 60px; color: #5bc0de"></span><br />
+                <span class="glyphicon glyphicon-music" style="font-size: 60px; color: #339999"></span><br />
             </p>
             <p>
                 @Html.DisplayName("Title: ")
@@ -79,20 +83,21 @@
                 </p>
             }
 
-            <button type="button" class="btn btn-info btn-sm" style="float: right;" onclick="window.open('@songQuery')">
+            <button type="button" class="btn btn-sm" style="float: right; background-color: #339999; color: white" onclick="window.open('@songQuery')">
                 <span class="glyphicon glyphicon-play" style="font-size: 14px;"></span> Play
             </button>
 
-            <button type="button" id="addCollection" class="btn btn-warning btn-sm" style="float: right; margin-right: 10px">
+            <button type="button" id="addCollection" class="btn btn-sm" style="float: right; margin-right: 10px;
+                        background-color: #00CC99; color: white;">
                 <span class="glyphicon glyphicon-plus" style="font-size: 14px;"></span> Add to user collection
             </button>
         </div>
     </div>
 
-
+    <!--Block for showing friends that have this song in their playlists.-->
     <div class="col-md-6 col-xs-12">
-        <div class="jumbotron">
-            <h4 style="color: #5bc0de">Friends who like this song:</h4>
+        <div class="jumbotron" style="background-color: #F0F0F0; ">
+            <h4 style="color: #339999">Friends who like this song:</h4>
             <table class="table" style="font-size: small">
                 <tr>
                     <th>Name and Surname</th>
@@ -110,9 +115,10 @@
         </div>
     </div>
 
+    <!--Block for showing users that have this song in their playlists.-->
     <div class="col-md-6 col-xs-12">
-        <div class="jumbotron">
-            <h4 style="color: #5bc0de">Users who like this song:</h4>
+        <div class="jumbotron" style="background-color: #F0F0F0; ">
+            <h4 style="color: #339999">Users who like this song:</h4>
             <table class="table" style="font-size: small">
                 <tr>
                     <th>Name and Surname</th>
@@ -129,14 +135,12 @@
             </table>
         </div>
     </div>
+
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
 </div>
-
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SongId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
-
-
 @section scripts {
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script>
@@ -163,8 +167,6 @@
 
         function submitForm() {
             $('#addSongToUserCollection').submit();
-
         }
     </script>
-
 }

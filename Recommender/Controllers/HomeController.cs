@@ -35,6 +35,17 @@ namespace Recommender.Controllers
             return View();
         }
 
+        public ActionResult Dashboard()
+        {
+            ViewBag.Message = "Your profile page.";
+
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var user = manager.FindByNameAsync(User.Identity.Name);
+            ViewBag.id = user.Id;
+
+            return View();
+        }
+
         [Authorize]
         public ActionResult MyCollections()
         {
