@@ -35,6 +35,7 @@ namespace Recommender.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Dashboard()
         {
             ViewBag.Message = "Your profile page.";
@@ -52,6 +53,32 @@ namespace Recommender.Controllers
             ViewBag.Message = "Your collections page.";
 
             return View();
+        }
+
+
+        public ActionResult Recommend()
+        {
+            List<Song> recommendations = new List<Song>();
+            
+            //var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            //var user = manager.FindByNameAsync(User.Identity.Name);
+            
+            //AspNetUser wantedUser = _db.AspNetUsers.First(x => x.Id.Equals(user.Id));
+            //var songs = wantedUser.Songs.Take(11);
+
+            //foreach (var song in songs)
+            //{
+            //    UserCollection collection = song.UserCollections
+            //                                        .OrderByDescending(x => x.Timestamp)
+            //                                        .First();
+            //    Song recommendatedSong = collection.Songs
+            //                                        .OrderByDescending(x => x.Timestamp)
+            //                                        .First();
+            //    recommendations.Add(recommendatedSong);
+            //}
+
+            var songs = _db.Songs.Take(10).ToList();
+            return View(songs);
         }
     }
 }

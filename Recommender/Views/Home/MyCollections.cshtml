@@ -1,17 +1,17 @@
 ﻿@{
-    ViewBag.Title = "Моите колекции";
+    ViewBag.Title = "My Collections";
 }
 
 <div class="container body-content">
     <div class="panel-heading" align="center" style="margin-bottom:20px; background-image:url('../../Content/img/swirl_pattern.png')">
-        <h1>Моите колекции </h1>
+        <h1 style="color: #339999">My Collections </h1>
     </div>
 
 
     <div style="margin-bottom: 20px">
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal">
-            <span class="glyphicon glyphicon-plus-sign"></span> 
-            Креирај нова колекција
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal" style="background-color: #339999; color: white;">
+            <span class="glyphicon glyphicon-plus-sign"></span>
+            New Collection
         </button>
     </div>
 
@@ -21,14 +21,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Креирај нова колекција</h4>
+                    <h4 class="modal-title" id="myModalLabel">Create new Collection</h4>
                 </div>
                 <div class="modal-body" align="center">
-                    Внеси име на колекција <input id="ime" class="form-control" required/>
+                    Collection Name: <input id="ime" class="form-control" required/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Откажи</button>
-                    <button type="button" class="btn btn-primary">Додади</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn" style="background-color: #339999; color: white;">Add</button>
                 </div>
             </div>
         </div>

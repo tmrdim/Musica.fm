@@ -1,0 +1,65 @@
+﻿@model List<Recommender.Model.Song>
+
+@{
+    ViewBag.Title = "Recommend";
+}
+
+<div class="container body-content">
+    <div class="panel-heading" align="center" style="margin-bottom:20px; background-image:url('../../Content/img/swirl_pattern.png')">
+        <h1 style="color: #339999">Recommendations</h1>
+    </div>
+
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        var songQuery = "https://www.youtube.com/results?search_query=" + Model[i].Artist.ArtistName + Model[i].SongTitle;
+        songQuery.Replace(' ', '+');
+        <!--Block for showing detailed info for the song.-->
+        <div class="col-md-4 col-xs-4">
+            <div class="jumbotron" style="background-color: #F0F0F0; ">
+                <p align="center">
+                    <span class="glyphicon glyphicon-music" style="font-size: 60px; color: #339999;"></span><br />
+                </p>
+                <p style="font-size:17px">
+                    @Html.DisplayName("Title: ")
+                    @Html.DisplayFor(model => model[i].SongTitle)
+                </p>
+                <p style="font-size:17px">
+                    @Html.DisplayName("Artist: ")
+                    @Html.DisplayFor(model => model[i].Artist.ArtistName)
+                </p>
+                <p style="font-size:17px">
+                    @Html.DisplayName("Collection: ")
+                    @Html.DisplayFor(model => model[i].Collection.CollectionName)
+                </p>
+                @if (Model[i].Author != null)
+                {
+                    <p style="font-size:17px">
+                        @Html.DisplayName("Author: ")
+                        @Html.DisplayFor(model => model[i].Author.AuthorName)
+                    </p>
+                }
+                <p style="font-size:17px">
+                    @Html.DisplayName("Genre: ")
+                    @Html.DisplayFor(model => model[i].Genre.GenreName)
+                </p>
+                @if (Model[i].Duration != null)
+                {
+                    <p style="font-size:17px">
+                        @Html.DisplayName("Duration: ")
+                        @Html.DisplayFor(model => model[i].Duration)
+                    </p>
+                }
+                <button type="button" class="btn btn-sm" style="float: right; background-color: #339999; color: white" onclick="window.open('@songQuery')">
+                    <span class="glyphicon glyphicon-play" style="font-size: 14px;"></span> Play
+                </button>
+
+                <button type="button" id="addCollection" class="btn btn-sm" style="float: right; margin-right: 10px;
+                        background-color: #00CC99; color: white;"
+                        onclick="location.href='@Url.Action("Details", "Song", new { id = Model[i].SongId })'">
+                    <span class="glyphicon glyphicon-plus" style="font-size: 14px;"></span> Details
+                </button>
+            </div>
+        </div>
+    }
+
+</div>

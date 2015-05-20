@@ -387,6 +387,7 @@
     <Content Include="Views\Home\MyProfile.cshtml" />
     <Content Include="Views\Song\Details.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Home\Recommend.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

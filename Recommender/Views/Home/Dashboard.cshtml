@@ -1,22 +1,29 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "My Dashboard";
 }
 
 <div class="container body-content">
 
     <div class="panel-heading" align="center" style="margin-bottom:20px; background-image:url('../../Content/img/swirl_pattern.png')">
-        <h1>Корисничка табла</h1>
+        <h1 style="color: #339999">Dashboard</h1>
     </div>
     <div class="row">
         <div class="col-md-6 col-xs-12">
             <div class="jumbotron">
-                <p align="center"><a href="/User/Details/@ViewBag.id"><span class="glyphicon glyphicon-user"></span></a><br /> Мојот профил</p>
+                <p align="center">
+                    <a href="/Home/Recommend">
+                        <span class="glyphicon glyphicon-headphones" style="color: #00CC99; font-size: 35px"></span>
+                    </a><br /> Recommendations
+                </p>
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
             <div class="jumbotron">
-                <p align="center"><a href="#"><span class="glyphicon glyphicon-music"></span></a><br /> Слушај музика</p>
+                <p align="center">
+                    <a href="/Home/MyCollections">
+                        <span class="glyphicon glyphicon-th-list" style="color: #00CC99; font-size: 30px"></span>
+                    </a><br /> My Collections
+                </p>
             </div>
         </div>
     </div>
@@ -24,12 +31,21 @@
     <div class="row">
         <div class="col-md-6 col-xs-12">
             <div class="jumbotron">
-                <p align="center"><a href="/Home/MyCollections"><span class="glyphicon glyphicon-th-list"></span></a><br /> Моите колекции</p>
+                <p align="center">
+                    <a href="/User/Friends">
+                        <span class="glyphicon glyphicon-user" style="color: #00CC99; font-size: 30px"></span>
+                        <span class="glyphicon glyphicon-user" style="color: #339999; font-size: 30px"></span>
+                    </a><br /> Following
+                </p>
             </div>
         </div>
         <div class="col-md-6 col-xs-12">
             <div class="jumbotron">
-                <p align="center"><a href="#"><span class="glyphicon glyphicon-tasks"></span></a><br /> Моите пријатели</p>
+                <p align="center">
+                    <a href="/Song/Index">
+                        <span class="glyphicon glyphicon-search" style="color: #00CC99; font-size: 30px"></span>
+                    </a><br /> Search Songs
+                </p>
             </div>
         </div>
     </div>
