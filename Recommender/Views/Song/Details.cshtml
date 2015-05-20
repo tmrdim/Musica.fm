@@ -2,9 +2,43 @@
 
 @{
     ViewBag.Title = "Song Details";
+    var songQuery = "https://www.youtube.com/results?search_query=" + Model.Artist.ArtistName + Model.SongTitle;
+    songQuery.Replace(' ', '+');
 }
 
 <h2>Song Details</h2>
+
+<div class="alert" id="message" role="alert"></div>
+
+<div class="modal fade" id="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("AddSongToUserCollection", null,
+                    new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccessAddSongToUserCollection(data)" },
+                    new { id = "addSongToUserCollection" }))
+                {
+                    @Html.HiddenFor(model => model.SongId)
+                    foreach (var userCollection in (List<Recommender.Model.UserCollection>)ViewBag.UserCollections)
+                    {
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="collectionIds" value="@userCollection.UserCollectionId">@userCollection.UserCollectionName.ToString()</label>
+                        </div>
+                    }
+                }
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submitForm()">Choose</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 <div class="row">
@@ -45,8 +79,12 @@
                 </p>
             }
 
-            <button type="button" class="btn btn-info btn-sm" style="float: right;">
+            <button type="button" class="btn btn-info btn-sm" style="float: right;" onclick="window.open('@songQuery')">
                 <span class="glyphicon glyphicon-play" style="font-size: 14px;"></span> Play
+            </button>
+
+            <button type="button" id="addCollection" class="btn btn-warning btn-sm" style="float: right; margin-right: 10px">
+                <span class="glyphicon glyphicon-plus" style="font-size: 14px;"></span> Add to user collection
             </button>
         </div>
     </div>
@@ -66,7 +104,7 @@
                     <td>tmrdim</td>
                     <td><a>See profile</a></td>
                 </tr>
-               
+
 
             </table>
         </div>
@@ -86,7 +124,7 @@
                     <td>tmrdim</td>
                     <td><a>See profile</a></td>
                 </tr>
-                
+
 
             </table>
         </div>
@@ -97,3 +135,36 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.SongId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+@section scripts {
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#addCollection').click(function () {
+                $('#modal').modal('show');
+            });
+        });
+
+        function onSuccessAddSongToUserCollection(data) {
+            $('#modal').modal('hide');
+            if (data == "Success") {
+                $('#message').html("You have sucessfully added the song to selected collectons.")
+                    .removeClass("alert-danger")
+                    .addClass("alert-success")
+                    .slideDown("slow");
+            } else {
+                $('#message').html("Oooops! Something went wrong. Try again.")
+                   .removeClass("alert-success")
+                   .addClass("alert-danger")
+                   .slideDown("slow");
+            }
+        }
+
+        function submitForm() {
+            $('#addSongToUserCollection').submit();
+
+        }
+    </script>
+
+}

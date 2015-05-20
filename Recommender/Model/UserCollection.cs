@@ -16,8 +16,8 @@ namespace Recommender.Model
     {
         public UserCollection()
         {
-            this.AspNetUsers = new HashSet<AspNetUser>();
             this.Songs = new HashSet<Song>();
+            this.AspNetUsers = new HashSet<AspNetUser>();
         }
     
         public int UserCollectionId { get; set; }
@@ -26,7 +26,7 @@ namespace Recommender.Model
         public string UserId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
         public virtual ICollection<Song> Songs { get; set; }
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }

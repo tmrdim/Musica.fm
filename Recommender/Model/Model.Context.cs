@@ -32,8 +32,8 @@ namespace Recommender.Model
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<Genre> Genres { get; set; }
-        public virtual DbSet<UserCollection> UserCollections { get; set; }
         public virtual DbSet<Collection> Collections { get; set; }
         public virtual DbSet<Song> Songs { get; set; }
+        public virtual DbSet<UserCollection> UserCollections { get; set; }
     }
 }

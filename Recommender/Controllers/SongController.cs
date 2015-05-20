@@ -1,11 +1,13 @@
-﻿using Recommender.Model;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using Recommender.Model;
+using Recommender.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
 using System.Web.UI.WebControls;
 
 namespace Recommender.Controllers
@@ -59,8 +61,30 @@ namespace Recommender.Controllers
             var selectedSong = _db.Songs.Where(x => x.SongId == id).FirstOrDefault();
             //ViewBag.Users = _db.AspNetUsers.Where(x => x.Songs.Contains(selectedSong)).ToList();
             //ViewBag.Friends = _db.AspNetUsers.Where(x => x.Songs.Contains(selectedSong)).Where(x => x.AspNetUsers.Contains(_db.AspNetUsers.Where(y => y.Id == /*ID OF CURRENT USER*/).First())).ToList();
+            ViewBag.UserCollections = GetUserCollections();
 
             return View(selectedSong);
+        }
+
+        public ActionResult AddSongToUserCollection(List<int> collectionIds, int SongId)
+        {
+            try
+            {
+                var song = _db.Songs.First(x => x.SongId == SongId);
+                foreach (var id in collectionIds)
+                {
+                    var wantedCollection = _db.UserCollections.Where(x => x.UserCollectionId == id).First();
+                    song.UserCollections.Add(wantedCollection);
+                }
+                _db.Entry<Song>(song).State = System.Data.Entity.EntityState.Modified;
+                _db.SaveChanges();
+
+                return Json("Success");
+            }
+            catch (Exception e)
+            {
+                return Json("Fail");
+            }
         }
 
         // POST: Song/Delete/5
@@ -175,6 +199,16 @@ namespace Recommender.Controllers
                 genres.Insert(genre.GenreId, new SelectListItem { Value = genre.GenreId.ToString(), Text = genre.GenreName });
             }
             return genres;
+        }
+
+        public List<UserCollection> GetUserCollections()
+        {
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var user = manager.FindByName(User.Identity.Name);
+
+            var userId = user.Id;
+
+            return _db.UserCollections.Where(x => x.UserId == userId).ToList();
         }
     }
 

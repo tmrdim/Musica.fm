@@ -11,59 +11,73 @@
     @Html.ActionLink("Add new Song", "Create")
 </button>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.SongTitle)
-        </th>
-        <th>
-            @Html.DisplayName("Artist")
-        </th>
-        <th>
-            @Html.DisplayName("Author")
-        </th>
-        <th>
-            @Html.DisplayName("Genre")
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Duration)
-        </th>
-        <th>
-            @Html.DisplayName("Collection")
-        </th>
-        <th></th>
-    </tr>
+<table class="table" id="songsTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SongTitle)
+            </th>
+            <th>
+                @Html.DisplayName("Artist")
+            </th>
+            <th>
+                @Html.DisplayName("Author")
+            </th>
+            <th>
+                @Html.DisplayName("Genre")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th>
+                @Html.DisplayName("Collection")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SongTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Artist.ArtistName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AuthorId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Genre.GenreName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Duration)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Collection.CollectionName)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.SongId })
-        </td>
-    </tr>
-}
-
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SongTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Artist.ArtistName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthorId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre.GenreName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Collection.CollectionName)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.SongId })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
 
+    <script type="text/javascript">
 
+        $(document).ready(function () {
+            $("#songsTable").dataTable();
+        });
+    </script>
+}
+
+@section styles {
+    <link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
 }
