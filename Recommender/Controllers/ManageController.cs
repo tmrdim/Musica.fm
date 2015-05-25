@@ -7,12 +7,17 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Recommender.Models;
+using Recommender.Model;
 
 namespace Recommender.Controllers
 {
+
     [Authorize]
     public class ManageController : Controller
     {
+
+        MusicReccomenderEntities _db = new MusicReccomenderEntities();
+
         public ManageController()
         {
         }
@@ -56,6 +61,11 @@ namespace Recommender.Controllers
                 Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId()),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(User.Identity.GetUserId())
             };
+
+            string email = HttpContext.User.Identity.Name;
+            var user = _db.AspNetUsers.Where(x => x.UserName == email).FirstOrDefault();
+            ViewBag.user = user;
+
             return View(model);
         }
 

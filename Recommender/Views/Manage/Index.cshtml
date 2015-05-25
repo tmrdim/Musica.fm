@@ -8,6 +8,7 @@
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
     <h4>Change your account settings</h4>
+    <a href="@Url.Action("Details", "User",new {id = ViewBag.user.Id})" class="btn btn-info">View my profile</a>
     <hr />
     <dl class="dl-horizontal">
         <dt>Password:</dt>

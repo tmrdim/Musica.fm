@@ -32,7 +32,7 @@
         <div class="col-md-6 col-xs-12">
             <div class="jumbotron">
                 <p align="center">
-                    <a href="/User/Friends">
+                    <a href="@Url.Action("Friends", "User",new {id = ViewBag.user.Id})" >
                         <span class="glyphicon glyphicon-user" style="color: #00CC99; font-size: 30px"></span>
                         <span class="glyphicon glyphicon-user" style="color: #339999; font-size: 30px"></span>
                     </a><br /> Following

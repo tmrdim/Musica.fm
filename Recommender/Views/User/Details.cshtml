@@ -2,6 +2,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="container body-content">
-    <p>@ViewBag.id</p>
+    <div class="panel-heading" align="center" style="margin-bottom:20px; background-image:url('../../Content/img/swirl_pattern.png')">
+        <h1 style="color: #339999">My profile</h1>
+    </div>
+
+    <div class="page-header" align="center">
+        <h1><small>@ViewBag.user.UserName</small></h1>
+    </div>
+
+    <div class="row" align="center">
+        <div class="col-md-6">
+            <div class="jumbotron">
+               @if (@ViewBag.collections.Count == 0)
+               {
+                    <p>You have 0 collections</p>
+                    <a href="~/Views/Home/MyCollections.cshtml" role="button" class="btn btn-info">Create a new collection</a>
+               }
+               else
+               {
+                    <p>You have @ViewBag.collections.Count() collections</p>
+                    <a href="~/Views/Home/MyCollections.cshtml" role="button" class="btn btn-info">See all collections</a>
+               }
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <p>Следите 20 пријатели.</p>
+                <a href="~/Views/User/Friends.cshtml" role="button" class="btn btn-info">Види ги сите пријатели</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" align="center">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h2>What is your favorite song right now?</h2>
+                <div class="input-group input-group-lg">
+                    <input type="text" class="form-control" placeholder="Search song">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
