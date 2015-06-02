@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Recommender.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         MusicReccomenderEntities _db = new MusicReccomenderEntities();
@@ -38,7 +39,10 @@ namespace Recommender.Controllers
         public ActionResult Friends(string id)
         {
             //Не знам баш како да ги добијам пријателите.
+            
             ViewBag.user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+
+            
             return View();
         }
 

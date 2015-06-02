@@ -18,12 +18,12 @@
                @if (@ViewBag.collections.Count == 0)
                {
                     <p>You have 0 collections</p>
-                    <a href="~/Views/Home/MyCollections.cshtml" role="button" class="btn btn-info">Create a new collection</a>
+                    <a href="@Url.Action("MyCollections", "Home")" role="button" class="btn btn-info">Create a new collection</a>
                }
                else
                {
                     <p>You have @ViewBag.collections.Count() collections</p>
-                    <a href="~/Views/Home/MyCollections.cshtml" role="button" class="btn btn-info">See all collections</a>
+                    <a href="@Url.Action("MyCollections", "Home")" role="button" class="btn btn-info">See all collections</a>
                }
             </div>
         </div>
@@ -31,7 +31,7 @@
         <div class="col-md-6">
             <div class="jumbotron">
                 <p>Следите 20 пријатели.</p>
-                <a href="~/Views/User/Friends.cshtml" role="button" class="btn btn-info">Види ги сите пријатели</a>
+                <a href="@Url.Action("Friends", "User", new {id = ViewBag.user.Id })" role="button" class="btn btn-info">Види ги сите пријатели</a>
             </div>
         </div>
     </div>
@@ -42,6 +42,7 @@
                 <h2>What is your favorite song right now?</h2>
                 <div class="input-group input-group-lg">
                     <input type="text" class="form-control" placeholder="Search song">
+                    <a href="#" role="button" class="btn btn-default">Go!</a>
                 </div>
             </div>
         </div>

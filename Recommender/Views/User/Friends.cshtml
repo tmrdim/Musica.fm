@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container body-content">
+    <div class="panel-heading" align="center" style="margin-bottom:20px; background-image:url('../../Content/img/swirl_pattern.png')">
+        <h1 style="color: #339999">Following</h1>
+    </div>
+
+    <div class="page-header">
+        <a role="button" href="@Url.Action("Details", "User",new {id = ViewBag.user.Id})" class="btn btn-info">View my profile >></a> 
+    </div>
+
+    <div class="jumbotron">
+        <p>Листа на пријатели</p>
+    </div>
+</div>
