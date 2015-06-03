@@ -21,8 +21,11 @@ namespace Recommender.Controllers
         //GET : User/Details/Id
         public ActionResult Details(string id)
         {
-            ViewBag.user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
 
+            //Го земаме јузорт, неговите колекции и неговите пријатели и ги прикажуваме на профилот. 
+
+            ViewBag.user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            //ViewBag.friends = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault().AspNetUsers.ToList();
             ViewBag.collections = new List<UserCollection>(); //GetUserCollections(id);
             return View();
         }
@@ -38,13 +41,33 @@ namespace Recommender.Controllers
         //GET : User/Friends/Id
         public ActionResult Friends(string id)
         {
-            //Не знам баш како да ги добијам пријателите.
-            
-            ViewBag.user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
 
-            
+            //Ги земаме пријателите на јузерот и ги прикажуваме во Friends/id aka Following од Dashboard.
+
+
+            //Не знам баш како да ги добијам пријателите.
+            ViewBag.user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            //ViewBag.friends = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault().AspNetUsers.ToList();
+
             return View();
         }
 
+        public ActionResult Follow(string username)
+        {
+            //Код за да се заследи пријателот.
+            var userToBeFollowed = _db.AspNetUsers.Where(x => x.UserName == username).FirstOrDefault();
+
+
+            return RedirectToAction("Details", new { id = userToBeFollowed.Id });
+        }
+
+        public ActionResult Unfollow(string username)
+        {
+            //Код за да се одследи пријателот.
+            var userToBeUnfollowed = _db.AspNetUsers.Where(x => x.UserName == username).FirstOrDefault();
+
+
+            return RedirectToAction("Details", new { id = userToBeUnfollowed.Id });
+        }
     }
 }
