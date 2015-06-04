@@ -21,12 +21,10 @@ namespace Recommender.Controllers
         //GET : User/Details/Id
         public ActionResult Details(string id)
         {
-
-            //Го земаме јузорт, неговите колекции и неговите пријатели и ги прикажуваме на профилот. 
-
             ViewBag.user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
-            //ViewBag.friends = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault().AspNetUsers.ToList();
-            ViewBag.collections = new List<UserCollection>(); //GetUserCollections(id);
+            ViewBag.friends = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault().AspNetUsers.ToList();
+            ViewBag.collections = GetUserCollections(id);
+
             return View();
         }
 

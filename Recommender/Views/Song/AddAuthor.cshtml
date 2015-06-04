@@ -4,15 +4,15 @@
     ViewBag.Title = "AddAuthor";
 }
 
-<h2>AddAuthor</h2>
+<div class="container body-content">
+    <h2>AddAuthor</h2>
 
 
-@using (Html.BeginForm()) 
-{
+    @using (Html.BeginForm())
+    {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Author</h4>
+
+    <div class="form-horizontal"
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -29,8 +29,9 @@
             </div>
         </div>
     </div>
-}
+    }
+</div>
 
-@section Scripts {
+    @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+    }
