@@ -38,7 +38,9 @@ namespace Recommender.Controllers
         public ActionResult Friends(string id)
         {
             //Не знам баш како да ги добијам пријателите.
-            ViewBag.user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            ViewBag.user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault().AspNetUsers.ToList();
+
+            
             return View();
         }
 
