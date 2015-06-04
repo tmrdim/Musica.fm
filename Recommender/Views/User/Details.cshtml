@@ -5,45 +5,101 @@
 
 <div class="container body-content">
     <div class="panel-heading" align="center" style="margin-bottom:20px; background-image:url('../../Content/img/swirl_pattern.png')">
-        <h1 style="color: #339999">My profile</h1>
+        <!-- Проверуваме дали е мојот профил (профилот на тој што е најавен)-->
+        <!-- Ако не е мојот профил тогаш разгледуваме профил на некој друг-->
+        @if(HttpContext.Current.User.Identity.Name.Equals(ViewBag.user.UserName))
+        {
+            <h1 style="color: #339999">My profile</h1>
+        }
+        else
+        {
+            <h1 style="color: #339999">User Profile</h1>
+        }
     </div>
 
     <div class="page-header" align="center">
-        <h1><small>@ViewBag.user.UserName</small></h1>
+        <h1>
+            <small>@ViewBag.user.UserName</small>
+            
+        </h1>
     </div>
 
+    <!-- Ако профилот не е наш и е на некој човек кој што не го следиме, да покаже копче Follow.-->
+    @if (!HttpContext.Current.User.Identity.Name.Equals(ViewBag.user.UserName)
+        /* && !ViewBag.friends.contains(ViewBag.user.UserName)*/)
+    {
+        <div>
+            <a href="@Url.Action("Follow", "User", new { username = ViewBag.user.UserName})" role="button" class="btn btn-info btn-block">Do you want to follow this user?</a>
+        </div>
+    }
+    //Ако профилот не е наш и е на човек кој го следиме, да покаже копче Unfollow.
+    else if(!HttpContext.Current.User.Identity.Name.Equals(ViewBag.user.UserName)
+        /*&& ViewBag.friends.contains(ViewBag.user.UserName)*/)
+    {
+        <div>
+            <a href="@Url.Action("Unfollow", "User", new { username = ViewBag.user.UserName})" role="button" class="btn btn-warning btn-block">Unfollow</a>
+        </div>
+    }
+    else
+    {
+        <div class="row" align="center">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <h2>What is your favorite song right now?</h2>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter song">
+                        </div>
+                        <a href="#" role="button" class="btn btn-default">Go!</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+
+    <br /><br />
+
+
+
+    <!-- Дивови со колекциите и френдовите-->
     <div class="row" align="center">
         <div class="col-md-6">
-            <div class="jumbotron">
-               @if (@ViewBag.collections.Count == 0)
-               {
-                    <p>You have 0 collections</p>
-                    <a href="~/Views/Home/MyCollections.cshtml" role="button" class="btn btn-info">Create a new collection</a>
-               }
-               else
-               {
-                    <p>You have @ViewBag.collections.Count() collections</p>
-                    <a href="~/Views/Home/MyCollections.cshtml" role="button" class="btn btn-info">See all collections</a>
-               }
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3>@ViewBag.user.UserName's Collections <span class="badge">@ViewBag.collections.Count</span></h3></div>
+                <div class="panel-body">
+                    @if (@ViewBag.collections.Count == 0)
+                    {
+                        <p>There are 0 collections</p>
+
+                    }
+                    else
+                    {
+                        <p>You have @ViewBag.collections.Count() collections</p>
+                        <p>циклус кој ги прикажува сите колекции. Со клик на нив се пренасочува кон collection details</p>
+                    }
+                </div>
             </div>
         </div>
 
         <div class="col-md-6">
-            <div class="jumbotron">
-                <p>Следите 20 пријатели.</p>
-                <a href="~/Views/User/Friends.cshtml" role="button" class="btn btn-info">Види ги сите пријатели</a>
-            </div>
-        </div>
-    </div>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3>@ViewBag.user.UserName is Following <span class="badge">5</span></h3></div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            <a href="#" class="list-group-item" style="height:50px">
+                                <span class="glyphicon glyphicon-user pull-right"></span>  Пријател @(i)
+                            </a>
 
-    <div class="row" align="center">
-        <div class="col-md-12">
-            <div class="jumbotron">
-                <h2>What is your favorite song right now?</h2>
-                <div class="input-group input-group-lg">
-                    <input type="text" class="form-control" placeholder="Search song">
+                        }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    
+    
 </div>
