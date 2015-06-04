@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Recommender.Model.UserCollection>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@foreach (var item in Model)
+{
+
+    <div class="jumbotron">
+        <p align="center">
+            <a href="/Home/MyCollections">
+                <span class="glyphicon glyphicon-th-list" style="color: #00CC99; font-size: 30px"></span>
+            </a><br /> @item.UserCollectionName <br />
+            @Html.ActionLink("Details", "Details", "UserCollection", new { id = item.UserCollectionId })
+            </br>
+            @Html.ActionLink("Delete", "Delete", "UserCollection", new { id = item.UserCollectionId })
+            </p>
+        </div>
+}
+@Html.ActionLink("Create new Collection", "Create", "UserCollection")
+
+
+
