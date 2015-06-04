@@ -50,13 +50,13 @@ namespace Recommender.Controllers
             var modelCollection = (
                     from collection in this.db.UserCollections
                     where collection.UserId == userId
-                    select new UserCollection()
+                    select new Recommender.Models.UserCollection()
                     {
                         UserId = collection.UserId,
                         UserCollectionId = collection.UserCollectionId,
                         UserCollectionName = collection.UserCollectionName,
                         Timestamp = collection.Timestamp,
-                        Songs = collection.Songs
+                       
                     }
                 ).ToList();
 
