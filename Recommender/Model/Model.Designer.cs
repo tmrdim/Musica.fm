@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\DTamara\Documents\Visual Studio 2013\Projects\MusicReccomendator\Recommender\Model\Model.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\c0mrade\Source\Repos\Musica.fm3\Recommender\Model\Model.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

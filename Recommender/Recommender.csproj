@@ -164,11 +164,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SongController.cs" />
+    <Compile Include="Controllers\UserCollectionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\SongsViewModel.cs" />
+    <Compile Include="Models\UserCollection.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Model\Artist.cs">
@@ -391,6 +394,11 @@
     <Content Include="Views\User\Friends.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\UserCollection\Create.cshtml" />
+    <Content Include="Views\UserCollection\Delete.cshtml" />
+    <Content Include="Views\UserCollection\Details.cshtml" />
+    <Content Include="Views\UserCollection\Edit.cshtml" />
+    <Content Include="Views\UserCollection\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -1,0 +1,68 @@
+﻿@model Recommender.Model.UserCollection
+
+@{
+    ViewBag.Title = "Details";
+    
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserCollection</h4>
+	<hr />
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName("Sont Title")
+                </th>
+                <th>
+                    @Html.DisplayName("Artist")
+                </th>
+                <th>
+                    @Html.DisplayName("Author")
+                </th>
+                <th>
+                    @Html.DisplayName("Genre")
+                </th>
+                <th>
+                    @Html.DisplayName("Duration")
+                </th>
+               
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewData["songs"])
+            {
+                <tr>
+                    <td>
+                        @item.SongTitle
+                    </td>
+                    <td>
+                        @item.ArtistName
+                    </td>
+                    <td>
+                        @tem.AuthorName
+                    </td>
+                    <td>
+                        @item.GenreName
+                    </td>
+                    <td>
+                        @item.Duration
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", "Song", new { id = item.SongId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+       
+</div>
+<p>
+    
+         @Html.ActionLink("Add new song", "Create","Song")
+   
+         @Html.ActionLink("Back to List", "Index")
+</p>
