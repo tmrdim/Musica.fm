@@ -4,13 +4,14 @@
     ViewBag.Title = "AddCollection";
 }
 
-<h2>AddCollection</h2>
+<div class="container body-content">
+    <h2>AddCollection</h2>
 
 
-@using (Html.BeginForm()) 
-{
+    @using (Html.BeginForm())
+    {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Collection</h4>
         <hr />
@@ -37,9 +38,9 @@
             </div>
         </div>
     </div>
-}
+    }
+</div>
 
-
-@section Scripts {
+    @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+    }

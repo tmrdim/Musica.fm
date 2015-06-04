@@ -3,12 +3,12 @@
 @{
     ViewBag.Title = "AddGenre";
 }
+<div class="container body-content">
+    <h2>AddGenre</h2>
 
-<h2>AddGenre</h2>
 
-
-@using (Html.BeginForm()) 
-{
+    @using (Html.BeginForm())
+    {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
@@ -29,9 +29,10 @@
             </div>
         </div>
     </div>
-}
+    }
+</div>
 
 
-@section Scripts {
+    @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+    }
