@@ -11,26 +11,47 @@ namespace Recommender.Controllers
     public class UserController : Controller
     {
         MusicReccomenderEntities _db = new MusicReccomenderEntities();
+        static List<AspNetUser> _friends = null;
+        static AspNetUser _loggedUser = null;
+        static string _loggedUserId = null;
+        
         // GET: User
         public ActionResult Index()
         {
             return View();
         }
 
+        public ActionResult UserProfile(string id)
+        {
+            var user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            _loggedUser = user;
+            _loggedUserId = id;
+            var friends = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault().AspNetUsers1.ToList();
+            ViewBag.Friends = friends;
+            ViewBag.Collections = GetUserCollections(id);
+
+            return View(user);
+        }
 
         //GET : User/Details/Id
-        public ActionResult Details(string id)
+        public ActionResult Details(string id, string loggedId)
         {
-            ViewBag.user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
-            ViewBag.friends = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault().AspNetUsers.ToList();
-            ViewBag.collections = GetUserCollections(id);
+            var user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            var friends = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault().AspNetUsers1.ToList();
+            ViewBag.Friends = friends;
 
-            return View();
+            ViewBag.LoggedUser = _loggedUser;
+            ViewBag.LoggedUserFriends = _friends;
+
+            ViewBag.Collections = GetUserCollections(id);
+
+            return View(user);
         }
 
         public List<UserCollection> GetUserCollections(string id)
         {
             var user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+
             var userId = user.Id;
 
             return _db.UserCollections.Where(x => x.UserId == userId).ToList();
@@ -39,33 +60,40 @@ namespace Recommender.Controllers
         //GET : User/Friends/Id
         public ActionResult Friends(string id)
         {
+            var user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            _loggedUser = user;
+            _loggedUserId = id;
+            ViewBag.user = user;
+            var friends = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault().AspNetUsers1.ToList();
+            _friends = friends;
 
-            //Ги земаме пријателите на јузерот и ги прикажуваме во Friends/id aka Following од Dashboard.
-
-
-            //Не знам баш како да ги добијам пријателите.
-            ViewBag.user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
-            //ViewBag.friends = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault().AspNetUsers.ToList();
-
-            return View();
+            return View(friends);
         }
 
-        public ActionResult Follow(string username)
+        public ActionResult Follow(string id)
         {
-            //Код за да се заследи пријателот.
-            var userToBeFollowed = _db.AspNetUsers.Where(x => x.UserName == username).FirstOrDefault();
+            var toFriend = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            var loggedUser = _db.AspNetUsers.Where(x => x.Id == _loggedUserId).FirstOrDefault();
+            var friends = loggedUser.AspNetUsers1.ToList();
+            _loggedUser.AspNetUsers1.Add(toFriend);
 
+            _db.Entry<AspNetUser>(_loggedUser).State = System.Data.Entity.EntityState.Modified;
+            _db.SaveChanges();
 
-            return RedirectToAction("Details", new { id = userToBeFollowed.Id });
+            return RedirectToAction("Details", "User", new { id = id, loggedId = _loggedUser.Id });
         }
 
-        public ActionResult Unfollow(string username)
+        public ActionResult Unfollow(string id)
         {
-            //Код за да се одследи пријателот.
-            var userToBeUnfollowed = _db.AspNetUsers.Where(x => x.UserName == username).FirstOrDefault();
+            var unfriend = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            var loggedUser = _db.AspNetUsers.Where(x => x.Id == _loggedUserId).FirstOrDefault();
+            var friends = loggedUser.AspNetUsers1.ToList();
+            loggedUser.AspNetUsers1.Remove(unfriend);
 
+            _db.Entry<AspNetUser>(loggedUser).State = System.Data.Entity.EntityState.Modified;
+            _db.SaveChanges();
 
-            return RedirectToAction("Details", new { id = userToBeUnfollowed.Id });
+            return RedirectToAction("Details", "User", new { id = id, loggedId = _loggedUserId });
         }
     }
 }

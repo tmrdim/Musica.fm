@@ -1,50 +1,36 @@
 ﻿@model Recommender.Model.AspNetUser
+
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "UserProfile";
     List<Recommender.Model.UserCollection> collections = ViewBag.Collections;
     List<Recommender.Model.AspNetUser> friends = ViewBag.Friends;
-    Recommender.Model.AspNetUser loggedUser = ViewBag.LoggedUser;
-    List<Recommender.Model.AspNetUser> loggedUserFriends = ViewBag.LoggedUserFriends;
-    var isFriend = 0;
 }
 
 <div class="container body-content">
     <div class="panel-heading" align="center" style="margin-bottom:20px; background-image:url('../../Content/img/swirl_pattern.png')">
 
-        <h1 style="color: #339999">User Profile for:</h1>
-    </div>
-    <div class="page-header" align="center">
-        <h3 style="color: #339999"> @Model.UserName </h3>
+        <h1 style="color: #339999">My profile</h1>
+
     </div>
 
-    @foreach (var f in loggedUserFriends)
-    {
-        if (f.UserName.Equals(Model.UserName))
-        {
-            isFriend = 1;
-            break;
-        }
-    }
-
-    @if (isFriend == 1)
-    {
-        <div style="margin-bottom: 20px">
-            <a href="@Url.Action("Unfollow", "User", new { id = Model.Id })" class="btn btn-primary" style="background-color: #339999;">Unfollow</a>
+    <div class="row" align="center">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h2>What is your favorite song right now?</h2>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter song">
+                    </div>
+                    <a href="#" role="button" class="btn btn-default">Go!</a>
+                </form>
+            </div>
         </div>
-    }
-    else
-    {
-        <div style="margin-bottom: 20px">
-            <a href="@Url.Action("Follow", "User", new { id = Model.Id })" class="btn btn-primary" style="background-color: #339999;">Follow</a>
-        </div>
-    }
-
-    <br /><br />
+    </div>
 
     <div class="row" align="center">
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><h3>@Model.UserName 's Collections <span class="badge">@collections.Count()</span></h3></div>
+                <div class="panel-heading"><h3>@Model.UserName 's Collections <span class="badge">@ViewBag.Collections.Count</span></h3></div>
                 <div class="panel-body">
                     @if (@ViewBag.collections.Count == 0)
                     {
@@ -67,18 +53,18 @@
 
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><h3>@Model.UserName is Following <span class="badge">@friends.Count()</span></h3></div>
+                <div class="panel-heading"><h3>@Model.UserName is following <span class="badge">@friends.Count()</span></h3></div>
                 <div class="panel-body">
-                    @if (@ViewBag.friends.Count == 0)
+                    @if (friends.Count() == 0)
                     {
-                        <p>Currently, the user doesn't have any following users.</p>
+                        <p>Currently, user doesn't have any following users.</p>
                     }
                     else
                     {
                         <div class="list-group">
                             @foreach (var currentUser in friends)
                             {
-                                <a href="@Url.Action("Details", "User", new { id = currentUser.Id, loggedId = loggedUser.Id })" class="list-group-item" style="height:50px">
+                                <a href="@Url.Action("Details", "User", new { id = currentUser.Id, loggedId = Model.Id })" class="list-group-item" style="height:50px">
                                     <span class="glyphicon glyphicon-user pull-right"></span>  @currentUser.UserName
                                 </a>
                             }
@@ -93,3 +79,9 @@
 
 
 </div>
+
+
+<div style="margin-bottom: 20px">
+    <a href="@Url.Action("Dashboard", "Home",new { id = Model.Id })" class="btn btn-primary" style="background-color: #339999; margin-left: 180px;">Go back to Dashboard</a>
+</div>
+

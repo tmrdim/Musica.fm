@@ -10,8 +10,9 @@ using Recommender.Model;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Recommender.Models;
 
+using Recommender.Model;
+using Recommender.Models;
 
 namespace Recommender.Controllers
 {
@@ -111,7 +112,7 @@ namespace Recommender.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserCollectionId,UserCollectionName,Timestamp,UserId")] UserCollection usercollection)
+        public ActionResult Create(UserCollection usercollection)
         {
             if (ModelState.IsValid)
             {

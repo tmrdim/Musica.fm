@@ -173,7 +173,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SongViewModel.cs" />
-    <Compile Include="Models\UserCollection.cs" />
     <Compile Include="Model\Artist.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -399,6 +398,7 @@
     <Content Include="Views\UserCollection\Details.cshtml" />
     <Content Include="Views\UserCollection\Edit.cshtml" />
     <Content Include="Views\UserCollection\Index.cshtml" />
+    <Content Include="Views\User\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -425,7 +425,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56873</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
