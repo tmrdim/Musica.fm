@@ -17,28 +17,30 @@
         <h3 style="color: #339999"> @Model.UserName </h3>
     </div>
 
-    @foreach (var f in loggedUserFriends)
+    @if (loggedUserFriends.Count != 0 && loggedUser.Id != Model.Id)
     {
-        if (f.UserName.Equals(Model.UserName))
+        foreach (var f in loggedUserFriends)
         {
-            isFriend = 1;
-            break;
+            if (f.UserName.Equals(Model.UserName))
+            {
+                isFriend = 1;
+                break;
+            }
+        }
+
+        if (isFriend == 1)
+        {
+            <div style="margin-bottom: 20px">
+                <a href="@Url.Action("Unfollow", "User", new { id = Model.Id })" class="btn btn-primary" style="background-color: #339999;">Unfollow</a>
+            </div>
+        }
+        else
+        {
+            <div style="margin-bottom: 20px">
+                <a href="@Url.Action("Follow", "User", new { id = Model.Id })" class="btn btn-primary" style="background-color: #339999;">Follow</a>
+            </div>
         }
     }
-
-    @if (isFriend == 1)
-    {
-        <div style="margin-bottom: 20px">
-            <a href="@Url.Action("Unfollow", "User", new { id = Model.Id })" class="btn btn-primary" style="background-color: #339999;">Unfollow</a>
-        </div>
-    }
-    else
-    {
-        <div style="margin-bottom: 20px">
-            <a href="@Url.Action("Follow", "User", new { id = Model.Id })" class="btn btn-primary" style="background-color: #339999;">Follow</a>
-        </div>
-    }
-
     <br /><br />
 
     <div class="row" align="center">

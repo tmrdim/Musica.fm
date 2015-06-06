@@ -21,14 +21,10 @@ namespace Recommender.Controllers
             return View();
         }
 
-
-        
-
         [Authorize]
         public ActionResult Dashboard()
         {
             ViewBag.Message = "Your profile page.";
-
 
             string email = HttpContext.User.Identity.Name;
             var user = _db.AspNetUsers.Where(x => x.UserName == email).FirstOrDefault();

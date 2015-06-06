@@ -16,7 +16,7 @@ namespace Recommender.Controllers
     public class SongController : Controller
     {
         MusicReccomenderEntities _db = new MusicReccomenderEntities();
-
+        
         public ActionResult Index()
         {
             var songs = _db.Songs.ToList();
@@ -58,8 +58,16 @@ namespace Recommender.Controllers
         public ActionResult Details(int id)
         {
             var selectedSong = _db.Songs.Where(x => x.SongId == id).FirstOrDefault();
+
+            string email = HttpContext.User.Identity.Name;
+            var user = _db.AspNetUsers.Where(x => x.UserName == email).FirstOrDefault();
+            var userId = user.Id;
+
             //ViewBag.Users = _db.AspNetUsers.Where(x => x.Songs.Contains(selectedSong)).ToList();
-            //ViewBag.Friends = _db.AspNetUsers.Where(x => x.Songs.Contains(selectedSong)).Where(x => x.AspNetUsers.Contains(_db.AspNetUsers.Where(y => y.Id == /*ID OF CURRENT USER*/).First())).ToList();
+            //ViewBag.Friends = _db.AspNetUsers.Where(x => x.Songs.Contains(selectedSong))
+                //.Where(x => x.AspNetUsers.Contains(_db.AspNetUsers.Where(y => y.Id == userId).First())).ToList();
+
+
             ViewBag.UserCollections = GetUserCollections();
 
             return View(selectedSong);

@@ -40,8 +40,8 @@ namespace Recommender.Controllers
             var friends = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault().AspNetUsers1.ToList();
             ViewBag.Friends = friends;
 
-            ViewBag.LoggedUser = _loggedUser;
-            ViewBag.LoggedUserFriends = _friends;
+            ViewBag.LoggedUser = _db.AspNetUsers.Where(x => x.Id == loggedId).FirstOrDefault(); ;
+            ViewBag.LoggedUserFriends = _db.AspNetUsers.Where(x => x.Id == loggedId).FirstOrDefault().AspNetUsers1.ToList(); ;
 
             ViewBag.Collections = GetUserCollections(id);
 
