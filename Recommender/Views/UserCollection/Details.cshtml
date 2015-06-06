@@ -17,7 +17,7 @@
 
     @if (Model.Songs.Count() == 0)
     {
-        <h4 align="center">There are no songs added to this collection yet.</h4>
+        <h4 style="text-align: center">There are no songs added to this collection yet.</h4>
         <br /><br />
     }
     else
@@ -42,16 +42,10 @@
                         @Html.DisplayName(song.Artist.ArtistName)
                     </p>
                     <p style="font-size:17px">
-                        @Html.DisplayName("Collection: ")
+                        @Html.DisplayName("Album: ")
                         @Html.DisplayName(song.Collection.CollectionName)
                     </p>
-                    @if (song.Author != null)
-                    {
-                        <p style="font-size:17px">
-                            @Html.DisplayName("Author: ")
-                            @Html.DisplayName(song.Author.AuthorName)
-                        </p>
-                    }
+     
                     <p style="font-size:17px">
                         @Html.DisplayName("Genre: ")
                         @Html.DisplayName(song.Genre.GenreName)
@@ -65,6 +59,12 @@
                     }
                     <button type="button" class="btn btn-sm" style="float: right; background-color: #339999; color: white" onclick="window.open('@songQuery')">
                         <span class="glyphicon glyphicon-play" style="font-size: 14px;"></span> Play
+                    </button>
+
+                    <button type="button" class="btn btn-sm" style="float: right; margin-right: 10px;
+                        background-color: #00CC99; color: white;"
+                            onclick="location.href='@Url.Action("Delete", "Song", new { songId = song.SongId, collectionId = Model.UserCollectionId })'">
+                        <span class="glyphicon glyphicon-trash" style="font-size: 14px;"></span>
                     </button>
 
                     <button type="button" id="addCollection" class="btn btn-sm" style="float: right; margin-right: 10px;

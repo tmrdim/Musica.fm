@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Recommender.Model.AspNetUser>
+@using Recommender.Model
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -20,7 +21,7 @@
                     {
                         foreach (var user in Model)
                         {
-                            <a href="@Url.Action("Details", "User", new { id = user.Id, looggedUser = ViewBag.user.Id })" class="list-group-item" style="height:50px">
+                            <a href="@Url.Action("Details", "User", new { id = user.Id, loggedId = ((AspNetUser)ViewBag.user).Id })" class="list-group-item" style="height:50px">
                                     <span class="glyphicon glyphicon-user pull-right"></span>  @user.UserName
                                 </a>
                         }

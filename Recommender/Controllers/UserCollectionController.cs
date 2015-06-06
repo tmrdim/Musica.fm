@@ -22,12 +22,14 @@ namespace Recommender.Controllers
         private static string _id = null;
 
 
-        public ActionResult Index(string id)
+        public ActionResult Index()
         {
-            var user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            string email = HttpContext.User.Identity.Name;
+            var user = _db.AspNetUsers.Where(x => x.UserName == email).FirstOrDefault();
+            
             var collections = user.UserCollections.ToList();
 
-            _id = id;
+            _id = user.Id;
             ViewBag.UserId = _id;
             return View(collections);
         }

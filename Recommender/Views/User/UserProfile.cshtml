@@ -42,7 +42,7 @@
                             @foreach (var collection in collections)
                             {
                                 <a href="@Url.Action("Details", "UserCollection", new { id = collection.UserCollectionId })" class="list-group-item" style="height:50px">
-                                    <span class="glyphicon glyphicon-tasks pull-right"></span>  @collection.UserCollectionName
+                                    <span class="glyphicon glyphicon-th-list pull-right"></span>  @collection.UserCollectionName
                                 </a>
                             }
                         </div>

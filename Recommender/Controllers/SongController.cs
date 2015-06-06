@@ -54,6 +54,15 @@ namespace Recommender.Controllers
             return View(song);
         }
 
+        public ActionResult Delete(int songId, int collectionId)
+        {
+            var wantedSong = _db.Songs.Where(x => x.SongId == songId).First();
+            wantedSong.UserCollections.Remove(_db.UserCollections.Where(x => x.UserCollectionId == collectionId).First());
+            _db.Entry<Song>(wantedSong).State = System.Data.Entity.EntityState.Modified;
+            _db.SaveChanges();
+
+            return RedirectToAction("Details", "UserCollection", new { id = collectionId });
+        }
 
         public ActionResult Details(int id)
         {
@@ -61,13 +70,14 @@ namespace Recommender.Controllers
 
             string email = HttpContext.User.Identity.Name;
             var user = _db.AspNetUsers.Where(x => x.UserName == email).FirstOrDefault();
-            var userId = user.Id;
 
-            //ViewBag.Users = _db.AspNetUsers.Where(x => x.Songs.Contains(selectedSong)).ToList();
-            //ViewBag.Friends = _db.AspNetUsers.Where(x => x.Songs.Contains(selectedSong))
-                //.Where(x => x.AspNetUsers.Contains(_db.AspNetUsers.Where(y => y.Id == userId).First())).ToList();
+            var userIdsWithSong = selectedSong.UserCollections.Select(x => x.UserId).ToList();
 
-
+            var friendsWithSong = user.AspNetUsers1.Where(x => userIdsWithSong.Contains(x.Id)).ToList();
+            var usersWithSong = _db.AspNetUsers.Where(x => userIdsWithSong.Contains(x.Id)).ToList();
+            ViewBag.FriendsWithSong = friendsWithSong;
+            ViewBag.UsersWithSong = usersWithSong;
+            ViewBag.LoggedUserId = user.Id;
             ViewBag.UserCollections = GetUserCollections();
 
             return View(selectedSong);
@@ -92,16 +102,6 @@ namespace Recommender.Controllers
             {
                 return Json("Fail");
             }
-        }
-
-        // POST: Song/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            var wantedSong = _db.Songs.Remove(_db.Songs.Where(x => x.SongId == id).First());
-            _db.SaveChanges();
-
-            return RedirectToAction("Index");
         }
 
         public ActionResult AddGenre()
@@ -190,12 +190,9 @@ namespace Recommender.Controllers
 
         public List<SelectListItem> GetArtists()
         {
-            List<SelectListItem> artists = new List<SelectListItem>();
-            foreach (var artist in _db.Artists.ToList())
-            {
-                artists.Insert(artist.ArtistId, new SelectListItem { Value = artist.ArtistId.ToString(), Text = artist.ArtistName });
-            }
-            return artists;
+            return _db.Artists
+                        .Select(x => new SelectListItem { Value = x.ArtistId.ToString(), Text = x.ArtistName })
+                        .ToList();
         }
 
         public List<SelectListItem> GetGenres()

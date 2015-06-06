@@ -28,16 +28,10 @@
                     @Html.DisplayFor(model => model[i].Artist.ArtistName)
                 </p>
                 <p style="font-size:17px">
-                    @Html.DisplayName("Collection: ")
+                    @Html.DisplayName("Album: ")
                     @Html.DisplayFor(model => model[i].Collection.CollectionName)
                 </p>
-                @if (Model[i].Author != null)
-                {
-                    <p style="font-size:17px">
-                        @Html.DisplayName("Author: ")
-                        @Html.DisplayFor(model => model[i].Author.AuthorName)
-                    </p>
-                }
+               
                 <p style="font-size:17px">
                     @Html.DisplayName("Genre: ")
                     @Html.DisplayFor(model => model[i].Genre.GenreName)

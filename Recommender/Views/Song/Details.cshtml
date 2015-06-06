@@ -1,4 +1,5 @@
 ﻿@model Recommender.Model.Song
+@using Recommender.Model
 
 @{
     ViewBag.Title = "Song Details";
@@ -31,7 +32,7 @@
                     new { id = "addSongToUserCollection" }))
                     {
                         @Html.HiddenFor(model => model.SongId)
-                        foreach (var userCollection in (List<Recommender.Model.UserCollection>)ViewBag.UserCollections)
+                        foreach (var userCollection in (List<UserCollection>)ViewBag.UserCollections)
                         {
                             <div class="checkbox">
                                 <label><input type="checkbox" name="collectionIds" value="@userCollection.UserCollectionId">@userCollection.UserCollectionName.ToString()</label>
@@ -102,17 +103,16 @@
             <h4 style="color: #339999">Friends who like this song:</h4>
             <table class="table" style="font-size: small">
                 <tr>
-                    <th>Name and Surname</th>
                     <th>Username</th>
                     <th></th>
                 </tr>
-                <tr>
-                    <td>tamara</td>
-                    <td>tmrdim</td>
-                    <td><a href="@Url.Action("Details", "User", new { id = "e68a4ba7-9f92-41b5-8ad2-998863eeac68", loggedId = "e68a4ba7-9f92-41b5-8ad2-998863eeac68" })">See profile</a></td>
-                </tr>
-
-
+                @foreach (var user in (List<AspNetUser>)ViewBag.FriendsWithSong)
+                {
+                    <tr>
+                        <td>@user.Email</td>
+                        <td><a href="@Url.Action("Details", "User", new { id = user.Id, loggedId = ViewBag.LoggedUserId })">See profile</a></td>
+                    </tr>
+                }
             </table>
         </div>
     </div>
@@ -123,17 +123,16 @@
             <h4 style="color: #339999">Users who like this song:</h4>
             <table class="table" style="font-size: small">
                 <tr>
-                    <th>Name and Surname</th>
                     <th>Username</th>
                     <th></th>
                 </tr>
-                <tr>
-                    <td>tamara</td>
-                    <td>tmrdim</td>
-                    <td><a href="@Url.Action("Details", "User", new { id = "e68a4ba7-9f92-41b5-8ad2-998863eeac68", loggedId = "e68a4ba7-9f92-41b5-8ad2-998863eeac68" })">See profile</a></td>
-                </tr>
-
-
+                @foreach (var user in (List<AspNetUser>)ViewBag.UsersWithSong)
+                {
+                    <tr>
+                        <td>@user.Email</td>
+                        <td><a href="@Url.Action("Details", "User", new { id = user.Id, loggedId = ViewBag.LoggedUserId })">See profile</a></td>
+                    </tr>
+                }
             </table>
         </div>
     </div>
