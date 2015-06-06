@@ -20,8 +20,8 @@ namespace Recommender.Controllers
     {
         private MusicReccomenderEntities _db = new MusicReccomenderEntities();
         private static string _id = null;
-       
-        
+
+
         public ActionResult Index(string id)
         {
             var user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
@@ -29,14 +29,13 @@ namespace Recommender.Controllers
 
             _id = id;
             ViewBag.UserId = _id;
-
             return View(collections);
         }
 
         public ActionResult Details(int id)
         {
             var userCollection = _db.UserCollections.Where(x => x.UserCollectionId == id).FirstOrDefault();
-            
+
             return View(userCollection);
         }
 
