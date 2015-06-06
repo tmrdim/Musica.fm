@@ -394,11 +394,10 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\UserCollection\Create.cshtml" />
-    <Content Include="Views\UserCollection\Delete.cshtml" />
     <Content Include="Views\UserCollection\Details.cshtml" />
-    <Content Include="Views\UserCollection\Edit.cshtml" />
     <Content Include="Views\UserCollection\Index.cshtml" />
     <Content Include="Views\User\UserProfile.cshtml" />
+    <Content Include="Views\UserCollection\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -139,8 +139,6 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_UserCollections' does n
           <Property Name="UserCollectionId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Users_Users">
           <Key>
             <PropertyRef Name="FirstId" />
@@ -374,6 +372,7 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
           <EntitySet Name="Song" EntityType="Self.Song" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Songs_UserCollections" EntityType="Self.Songs_UserCollections" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserCollection" EntityType="Self.UserCollection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users_Users" EntityType="Self.Users_Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users_Songs" EntityType="Self.Users_Songs" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Users_Songs].[UserId] AS [UserId], 
@@ -385,12 +384,6 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
     [Users_UserCollections].[UserCollectionId] AS [UserCollectionId], 
     [Users_UserCollections].[UserId] AS [UserId]
     FROM [dbo].[Users_UserCollections] AS [Users_UserCollections]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Users_Users" EntityType="Self.Users_Users" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Users_Users].[FirstId] AS [FirstId], 
-    [Users_Users].[SecondId] AS [SecondId]
-    FROM [dbo].[Users_Users] AS [Users_Users]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -480,7 +473,7 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
           </Key>
           <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers" Relationship="MusicReccomenderModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -490,7 +483,7 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUser" Relationship="MusicReccomenderModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
@@ -501,32 +494,7 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
           <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="AspNetUser">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="AspNetUsers1" Relationship="Self.Users_Users" FromRole="AspNetUsers" ToRole="AspNetUsers1" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.Users_Users" FromRole="AspNetUsers1" ToRole="AspNetUsers" />
-          <NavigationProperty Name="UserCollections" Relationship="MusicReccomenderModel.FK_UserCollection_UserCollection" FromRole="AspNetUser" ToRole="UserCollection" />
-          <NavigationProperty Name="Songs" Relationship="MusicReccomenderModel.Users_Songs" FromRole="AspNetUser" ToRole="Song" />
-          <NavigationProperty Name="UserCollections1" Relationship="MusicReccomenderModel.Users_UserCollections" FromRole="AspNetUser" ToRole="UserCollection" />
+          <NavigationProperty Name="AspNetUser" Relationship="MusicReccomenderModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="Author">
           <Key>
@@ -546,76 +514,19 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
           <Property Name="Timestamp" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Songs" Relationship="MusicReccomenderModel.FK_Song_Genre" FromRole="Genre" ToRole="Song" />
         </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-        </Association>
-        <Association Name="Users_Users">
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-          <End Role="AspNetUsers1" Type="Self.AspNetUser" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="MusicReccomenderEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Artists" EntityType="Self.Artist" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="Authors" EntityType="Self.Author" />
           <EntitySet Name="Genres" EntityType="Self.Genre" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="Users_Users" Association="Self.Users_Users">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUsers1" EntitySet="AspNetUsers" />
-          </AssociationSet>
           <EntitySet Name="Collections" EntityType="MusicReccomenderModel.Collection" />
           <EntitySet Name="Songs" EntityType="MusicReccomenderModel.Song" />
           <EntitySet Name="UserCollections" EntityType="MusicReccomenderModel.UserCollection" />
           <AssociationSet Name="FK_Song_Artist" Association="MusicReccomenderModel.FK_Song_Artist">
             <End Role="Artist" EntitySet="Artists" />
             <End Role="Song" EntitySet="Songs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserCollection_UserCollection" Association="MusicReccomenderModel.FK_UserCollection_UserCollection">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="UserCollection" EntitySet="UserCollections" />
           </AssociationSet>
           <AssociationSet Name="FK_Song_Author" Association="MusicReccomenderModel.FK_Song_Author">
             <End Role="Author" EntitySet="Authors" />
@@ -632,6 +543,27 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
           <AssociationSet Name="Songs_UserCollections" Association="MusicReccomenderModel.Songs_UserCollections">
             <End Role="Song" EntitySet="Songs" />
             <End Role="UserCollection" EntitySet="UserCollections" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUsers" EntityType="MusicReccomenderModel.AspNetUser" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="MusicReccomenderModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="MusicReccomenderModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCollection_UserCollection" Association="MusicReccomenderModel.FK_UserCollection_UserCollection">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="UserCollection" EntitySet="UserCollections" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="MusicReccomenderModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="Users_Users" Association="MusicReccomenderModel.Users_Users">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUser1" EntitySet="AspNetUsers" />
           </AssociationSet>
           <AssociationSet Name="Users_Songs" Association="MusicReccomenderModel.Users_Songs">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -679,8 +611,8 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
           <Property Name="UserCollectionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Timestamp" Type="DateTime" Precision="3" />
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="MusicReccomenderModel.FK_UserCollection_UserCollection" FromRole="UserCollection" ToRole="AspNetUser" />
           <NavigationProperty Name="Songs" Relationship="MusicReccomenderModel.Songs_UserCollections" FromRole="UserCollection" ToRole="Song" />
+          <NavigationProperty Name="AspNetUser" Relationship="MusicReccomenderModel.FK_UserCollection_UserCollection" FromRole="UserCollection" ToRole="AspNetUser" />
           <NavigationProperty Name="AspNetUsers" Relationship="MusicReccomenderModel.Users_UserCollections" FromRole="UserCollection" ToRole="AspNetUser" />
         </EntityType>
         <Association Name="FK_Song_Artist">
@@ -692,18 +624,6 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
             </Principal>
             <Dependent Role="Song">
               <PropertyRef Name="ArtistId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserCollection_UserCollection">
-          <End Type="MusicReccomenderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="MusicReccomenderModel.UserCollection" Role="UserCollection" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserCollection">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -746,6 +666,79 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
         <Association Name="Songs_UserCollections">
           <End Type="MusicReccomenderModel.Song" Role="Song" Multiplicity="*" />
           <End Type="MusicReccomenderModel.UserCollection" Role="UserCollection" Multiplicity="*" />
+        </Association>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="MusicReccomenderModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="MusicReccomenderModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="UserCollections" Relationship="MusicReccomenderModel.FK_UserCollection_UserCollection" FromRole="AspNetUser" ToRole="UserCollection" />
+          <NavigationProperty Name="AspNetRoles" Relationship="MusicReccomenderModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="MusicReccomenderModel.Users_Users" FromRole="AspNetUser" ToRole="AspNetUser1" />
+          <NavigationProperty Name="AspNetUsers" Relationship="MusicReccomenderModel.Users_Users" FromRole="AspNetUser1" ToRole="AspNetUser" />
+          <NavigationProperty Name="Songs" Relationship="MusicReccomenderModel.Users_Songs" FromRole="AspNetUser" ToRole="Song" />
+          <NavigationProperty Name="UserCollections1" Relationship="MusicReccomenderModel.Users_UserCollections" FromRole="AspNetUser" ToRole="UserCollection" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="MusicReccomenderModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MusicReccomenderModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="MusicReccomenderModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MusicReccomenderModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCollection_UserCollection">
+          <End Type="MusicReccomenderModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="MusicReccomenderModel.UserCollection" Role="UserCollection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserCollection">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="MusicReccomenderModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="MusicReccomenderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <Association Name="Users_Users">
+          <End Type="MusicReccomenderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <End Type="MusicReccomenderModel.AspNetUser" Role="AspNetUser1" Multiplicity="*" />
         </Association>
         <Association Name="Users_Songs">
           <End Type="MusicReccomenderModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
@@ -797,24 +790,6 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="MusicReccomenderModel.AspNetUser">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Authors">
             <EntityTypeMapping TypeName="MusicReccomenderModel.Author">
               <MappingFragment StoreEntitySet="Author">
@@ -833,22 +808,6 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="MusicReccomenderModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="Users_Users" TypeName="MusicReccomenderModel.Users_Users" StoreEntitySet="Users_Users">
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="FirstId" />
-            </EndProperty>
-            <EndProperty Name="AspNetUsers1">
-              <ScalarProperty Name="Id" ColumnName="SecondId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Collections">
             <EntityTypeMapping TypeName="MusicReccomenderModel.Collection">
               <MappingFragment StoreEntitySet="Collection">
@@ -889,6 +848,40 @@ warning 6002: The table/view 'MusicReccomender.dbo.Users_Users' does not have a 
             </EndProperty>
             <EndProperty Name="Song">
               <ScalarProperty Name="SongId" ColumnName="SongId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="MusicReccomenderModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="MusicReccomenderModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Users_Users" TypeName="MusicReccomenderModel.Users_Users" StoreEntitySet="Users_Users">
+            <EndProperty Name="AspNetUser1">
+              <ScalarProperty Name="Id" ColumnName="SecondId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="FirstId" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="Users_Songs" TypeName="MusicReccomenderModel.Users_Songs" StoreEntitySet="Users_Songs">

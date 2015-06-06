@@ -18,10 +18,10 @@ namespace Recommender.Model
         {
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
+            this.UserCollections = new HashSet<UserCollection>();
             this.AspNetRoles = new HashSet<AspNetRole>();
             this.AspNetUsers1 = new HashSet<AspNetUser>();
             this.AspNetUsers = new HashSet<AspNetUser>();
-            this.UserCollections = new HashSet<UserCollection>();
             this.Songs = new HashSet<Song>();
             this.UserCollections1 = new HashSet<UserCollection>();
         }
@@ -41,10 +41,10 @@ namespace Recommender.Model
     
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual ICollection<UserCollection> UserCollections { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
         public virtual ICollection<AspNetUser> AspNetUsers1 { get; set; }
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
-        public virtual ICollection<UserCollection> UserCollections { get; set; }
         public virtual ICollection<Song> Songs { get; set; }
         public virtual ICollection<UserCollection> UserCollections1 { get; set; }
     }

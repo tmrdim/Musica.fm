@@ -20,7 +20,7 @@
         <div class="col-md-6 col-xs-12">
             <div class="jumbotron">
                 <p align="center">
-                    <a href="/Home/MyCollections">
+                    <a href="@Url.Action("Index", "UserCollection", new { id = ViewBag.user.Id })">
                         <span class="glyphicon glyphicon-th-list" style="color: #00CC99; font-size: 30px"></span>
                     </a><br /> My Collections
                 </p>

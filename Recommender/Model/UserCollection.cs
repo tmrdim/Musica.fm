@@ -25,8 +25,8 @@ namespace Recommender.Model
         public Nullable<System.DateTime> Timestamp { get; set; }
         public string UserId { get; set; }
     
-        public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<Song> Songs { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }

@@ -1,30 +1,52 @@
-﻿@model IEnumerable<Recommender.Model.UserCollection>
+﻿@model List<Recommender.Model.UserCollection>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="container body-content">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+    <div class="panel-heading" align="center" style="margin-bottom:20px; background-image:url('../../Content/img/swirl_pattern.png')">
+        <h1 style="color: #339999">List of User Collections</h1>
+    </div>
 
-@foreach (var item in Model)
-{
+    <button type="button" class="btn" style="background-color: #339999; color: white;" onclick="location.href='@Url.Action("Create", "UserCollection")'">
+        <span class="glyphicon glyphicon-plus-sign"></span><span style="text-decoration: double"> New User Collection</span>
+    </button>
 
-    <div class="jumbotron">
-        <p align="center">
-            <a href="/Home/MyCollections">
-                <span class="glyphicon glyphicon-th-list" style="color: #00CC99; font-size: 30px"></span>
-            </a><br /> @item.UserCollectionName <br />
-            @Html.ActionLink("Details", "Details", "UserCollection", new { id = item.UserCollectionId })
-            </br>
-            @Html.ActionLink("Delete", "Delete", "UserCollection", new { id = item.UserCollectionId })
-            </p>
-        </div>
-}
-@Html.ActionLink("Create new Collection", "Create", "UserCollection")
+    <div style="margin-top: 20px">
+        @foreach (var collection in Model)
+        {
+            <div class="col-md-4 col-xs-4">
+                <div class="jumbotron" style="background-color: #F0F0F0; ">
+                    <p align="center">
+                        <span class="glyphicon glyphicon-th-list" style="font-size: 60px; color: #339999;"></span><br />
+                    </p>
+                    <p style="font-size:18px" align="center">
+                        @Html.DisplayName(collection.UserCollectionName)
+                    </p>
+                    <p style="font-size:18px" align="center">
+                        @Html.DisplayName("Number of songs: ")
+                        @collection.Songs.Count()
+                    </p>
+                    <br />
+
+                    <button type="button" class="btn btn-sm" style="float: right; margin-right: 10px;
+                        background-color: #00CC99; color: white;"
+                            onclick="location.href='@Url.Action("Delete", "UserCollection", new { id = collection.UserCollectionId })'">
+                        <span class="glyphicon glyphicon-trash" style="font-size: 14px;"></span>
+                    </button>
+
+                    <button type="button" class="btn btn-sm" style="float: right; margin-right: 10px;
+                        background-color: #00CC99; color: white;"
+                            onclick="location.href='@Url.Action("Details", "UserCollection", new { id = collection.UserCollectionId })'">
+                        <span class="glyphicon glyphicon-plus" style="font-size: 14px;"></span> Details
+                    </button>
+                </div>
+            </div>
+
+        }
+    </div>
 
 
-
+</div>

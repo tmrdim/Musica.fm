@@ -9,22 +9,22 @@
         <EntityTypeShape EntityType="MusicReccomenderModel.AspNetRole" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="MusicReccomenderModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MusicReccomenderModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MusicReccomenderModel.AspNetUser" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MusicReccomenderModel.Author" Width="1.5" PointX="6" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MusicReccomenderModel.Genre" Width="1.5" PointX="6" PointY="12.5" IsExpanded="true" />
-        <AssociationConnector Association="MusicReccomenderModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="MusicReccomenderModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="MusicReccomenderModel.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="MusicReccomenderModel.Users_Users" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MusicReccomenderModel.Collection" Width="1.5" PointX="6" PointY="16" />
         <EntityTypeShape EntityType="MusicReccomenderModel.Song" Width="1.5" PointX="8.25" PointY="9" />
         <EntityTypeShape EntityType="MusicReccomenderModel.UserCollection" Width="1.5" PointX="8.25" PointY="5.75" />
         <AssociationConnector Association="MusicReccomenderModel.FK_Song_Artist" />
-        <AssociationConnector Association="MusicReccomenderModel.FK_UserCollection_UserCollection" />
         <AssociationConnector Association="MusicReccomenderModel.FK_Song_Author" />
         <AssociationConnector Association="MusicReccomenderModel.FK_Song_Collection" />
         <AssociationConnector Association="MusicReccomenderModel.FK_Song_Genre" />
         <AssociationConnector Association="MusicReccomenderModel.Songs_UserCollections" />
+        <EntityTypeShape EntityType="MusicReccomenderModel.AspNetUser" Width="1.5" PointX="3" PointY="4.75" />
+        <AssociationConnector Association="MusicReccomenderModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="MusicReccomenderModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="MusicReccomenderModel.FK_UserCollection_UserCollection" />
+        <AssociationConnector Association="MusicReccomenderModel.AspNetUserRoles" />
+        <AssociationConnector Association="MusicReccomenderModel.Users_Users" />
         <AssociationConnector Association="MusicReccomenderModel.Users_Songs" />
         <AssociationConnector Association="MusicReccomenderModel.Users_UserCollections" />
         </Diagram>

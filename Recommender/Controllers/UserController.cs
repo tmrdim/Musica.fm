@@ -80,6 +80,8 @@ namespace Recommender.Controllers
             _db.Entry<AspNetUser>(_loggedUser).State = System.Data.Entity.EntityState.Modified;
             _db.SaveChanges();
 
+            _friends = loggedUser.AspNetUsers1.ToList();
+            ViewBag.LoggedUserFriends = loggedUser.AspNetUsers1.ToList();
             return RedirectToAction("Details", "User", new { id = id, loggedId = _loggedUser.Id });
         }
 
@@ -87,12 +89,13 @@ namespace Recommender.Controllers
         {
             var unfriend = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
             var loggedUser = _db.AspNetUsers.Where(x => x.Id == _loggedUserId).FirstOrDefault();
-            var friends = loggedUser.AspNetUsers1.ToList();
             loggedUser.AspNetUsers1.Remove(unfriend);
 
             _db.Entry<AspNetUser>(loggedUser).State = System.Data.Entity.EntityState.Modified;
             _db.SaveChanges();
 
+            _friends = loggedUser.AspNetUsers1.ToList();
+            ViewBag.LoggedUserFriends = loggedUser.AspNetUsers1.ToList();
             return RedirectToAction("Details", "User", new { id = id, loggedId = _loggedUserId });
         }
     }

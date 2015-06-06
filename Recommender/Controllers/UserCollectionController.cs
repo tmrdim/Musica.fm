@@ -11,184 +11,85 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 
-using Recommender.Model;
 using Recommender.Models;
 
 namespace Recommender.Controllers
 {
+    [Authorize]
     public class UserCollectionController : Controller
     {
-        private MusicReccomenderEntities db = new MusicReccomenderEntities();
-        private ApplicationUserManager _userManager;
-
-        public UserCollectionController()
+        private MusicReccomenderEntities _db = new MusicReccomenderEntities();
+        private static string _id = null;
+       
+        
+        public ActionResult Index(string id)
         {
+            var user = _db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault();
+            var collections = user.UserCollections.ToList();
+
+            _id = id;
+            ViewBag.UserId = _id;
+
+            return View(collections);
         }
 
-        public UserCollectionController(ApplicationUserManager userManager)
+        public ActionResult Details(int id)
         {
-            UserManager = userManager;
+            var userCollection = _db.UserCollections.Where(x => x.UserCollectionId == id).FirstOrDefault();
+            
+            return View(userCollection);
         }
 
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
-        // GET: /UserCollection/
-        [Authorize]
-        public ActionResult Index()
-        {
-            var userId = this.User.Identity.GetUserId();
-
-            var modelCollection = (
-                    from collection in this.db.UserCollections
-                    where collection.UserId == userId
-                    select new UserCollection()
-                    {
-                        UserId = collection.UserId,
-                        UserCollectionId = collection.UserCollectionId,
-                        UserCollectionName = collection.UserCollectionName,
-                        Timestamp = collection.Timestamp,
-                        Songs = collection.Songs
-                    }
-                ).ToList();
-
-            return View(modelCollection);
-        }
-
-        // GET: /UserCollection/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var modelSongs = (
-                    from song in this.db.Songs
-                    join artist in this.db.Artists on song.ArtistId equals artist.ArtistId
-                    join author in this.db.Authors on song.AuthorId equals author.AuthorId
-                    join genre in this.db.Genres on song.GenreId equals genre.GenreId
-                    where song.CollectionId == id
-                    select new SongsViewModel()
-                    {
-                        SongId = song.SongId,
-                        SongTitle = song.SongTitle,
-                        ArtistId = song.ArtistId,
-                        AuthorId = song.AuthorId,
-                        ArtistName = artist.ArtistName,
-                        AuthorName = author.AuthorName,
-                        GenreId = song.GenreId,
-                        GenreName = genre.GenreName,
-                        Duration = song.Duration,
-                        Timestamp = song.Timestamp,
-                        CollectionId = song.CollectionId
-                    }
-                ).ToList();
-
-
-            ViewData["songs"] = modelSongs;
-
-            return View();
-        }
-
-        // GET: /UserCollection/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email");
             return View();
         }
 
-        // POST: /UserCollection/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(UserCollection usercollection)
         {
             if (ModelState.IsValid)
             {
-                db.UserCollections.Add(usercollection);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                usercollection.UserCollectionId = _db.UserCollections.Count();
+                usercollection.UserId = _id;
+
+                _db.UserCollections.Add(usercollection);
+                _db.SaveChanges();
+
+                return RedirectToAction("Index", new { id = _id });
             }
 
-            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", usercollection.UserId);
             return View(usercollection);
         }
 
-        // GET: /UserCollection/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Delete()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserCollection usercollection = db.UserCollections.Find(id);
-            if (usercollection == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", usercollection.UserId);
-            return View(usercollection);
+            ViewBag.UserId = _id;
+            return View();
         }
 
-        // POST: /UserCollection/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserCollectionId,UserCollectionName,Timestamp,UserId")] UserCollection usercollection)
+        public ActionResult Delete(int id)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(usercollection).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", usercollection.UserId);
-            return View(usercollection);
-        }
+            var usercollection = _db.UserCollections.Where(x => x.UserCollectionId == id).First();
 
-        // GET: /UserCollection/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserCollection usercollection = db.UserCollections.Find(id);
-            if (usercollection == null)
-            {
-                return HttpNotFound();
-            }
-            return View(usercollection);
-        }
+            var user = _db.AspNetUsers.Where(x => x.Id == _id).First();
+            user.UserCollections.Remove(usercollection);
+            _db.UserCollections.Remove(usercollection);
 
-        // POST: /UserCollection/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            UserCollection usercollection = db.UserCollections.Find(id);
-            db.UserCollections.Remove(usercollection);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            _db.Entry<UserCollection>(usercollection).State = System.Data.Entity.EntityState.Modified;
+            _db.SaveChanges();
+
+            ViewBag.UserId = _id;
+            return RedirectToAction("Index", new { id = _id });
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

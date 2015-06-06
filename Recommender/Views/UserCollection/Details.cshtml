@@ -1,68 +1,84 @@
 ﻿@model Recommender.Model.UserCollection
-
 @{
     ViewBag.Title = "Details";
-
 }
 
-<h2>Details</h2>
+<div class="container body-content">
 
-<div>
-    <h4>UserCollection</h4>
-    <hr />
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayName("Sont Title")
-                </th>
-                <th>
-                    @Html.DisplayName("Artist")
-                </th>
-                <th>
-                    @Html.DisplayName("Author")
-                </th>
-                <th>
-                    @Html.DisplayName("Genre")
-                </th>
-                <th>
-                    @Html.DisplayName("Duration")
-                </th>
+    <div class="panel-heading" align="center" style="margin-bottom:20px; background-image:url('../../Content/img/swirl_pattern.png')">
+        <h1 style="color: #339999">List of songs in @Model.UserCollectionName</h1>
+    </div>
 
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in ViewData["songs"])
-            {
-                <tr>
-                    <td>
-                        @item.SongTitle
-                    </td>
-                    <td>
-                        @item.ArtistName
-                    </td>
-                    <td>
-                        @tem.AuthorName
-                    </td>
-                    <td>
-                        @item.GenreName
-                    </td>
-                    <td>
-                        @item.Duration
-                    </td>
-                    <td>
-                        @Html.ActionLink("Details", "Details", "Song", new { id = item.SongId })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div style="padding-bottom: 20px">
+        <button type="button" class="btn" style="background-color: #339999; color: white;" onclick="location.href='@Url.Action("Index", "Song")'">
+            <span class="glyphicon glyphicon-plus-sign"></span><span style="text-decoration: double"> Add new song</span>
+        </button>
+    </div>
 
+    @if (Model.Songs.Count() == 0)
+    {
+        <h4 align="center">There are no songs added to this collection yet.</h4>
+        <br /><br />
+    }
+    else
+    {
+        foreach (var song in Model.Songs)
+        {
+            var songQuery = "https://www.youtube.com/results?search_query=" + song.Artist.ArtistName + song.SongTitle;
+            songQuery.Replace(' ', '+');
+
+        <!--Block for showing detailed info for the song.-->
+            <div class="col-md-4 col-xs-4">
+                <div class="jumbotron" style="background-color: #F0F0F0; ">
+                    <p align="center">
+                        <span class="glyphicon glyphicon-music" style="font-size: 60px; color: #339999;"></span><br />
+                    </p>
+                    <p style="font-size:17px">
+                        @Html.DisplayName("Title: ")
+                        @Html.DisplayName(song.SongTitle)
+                    </p>
+                    <p style="font-size:17px">
+                        @Html.DisplayName("Artist: ")
+                        @Html.DisplayName(song.Artist.ArtistName)
+                    </p>
+                    <p style="font-size:17px">
+                        @Html.DisplayName("Collection: ")
+                        @Html.DisplayName(song.Collection.CollectionName)
+                    </p>
+                    @if (song.Author != null)
+                    {
+                        <p style="font-size:17px">
+                            @Html.DisplayName("Author: ")
+                            @Html.DisplayName(song.Author.AuthorName)
+                        </p>
+                    }
+                    <p style="font-size:17px">
+                        @Html.DisplayName("Genre: ")
+                        @Html.DisplayName(song.Genre.GenreName)
+                    </p>
+                    @if (song.Duration != null)
+                    {
+                        <p style="font-size:17px">
+                            @Html.DisplayName("Duration: ")
+                            @Html.DisplayName(song.Duration.ToString())
+                        </p>
+                    }
+                    <button type="button" class="btn btn-sm" style="float: right; background-color: #339999; color: white" onclick="window.open('@songQuery')">
+                        <span class="glyphicon glyphicon-play" style="font-size: 14px;"></span> Play
+                    </button>
+
+                    <button type="button" id="addCollection" class="btn btn-sm" style="float: right; margin-right: 10px;
+                        background-color: #00CC99; color: white;"
+                            onclick="location.href='@Url.Action("Details", "Song", new { id = song.SongId })'">
+                        <span class="glyphicon glyphicon-plus" style="font-size: 14px;"></span> Details
+                    </button>
+                </div>
+            </div>
+        }
+
+    }
 </div>
-<p>
 
-    @Html.ActionLink("Add new song", "Create", "Song")
-
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div style="margin-bottom: 20px">
+    <a href="@Url.Action("Index", "UserCollection", new { id = Model.UserId })" style="color:#339999; margin-left: 180px; text-decoration: underline"> Go back to Collections</a>
+</div>
